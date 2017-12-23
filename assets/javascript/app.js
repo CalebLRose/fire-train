@@ -41,8 +41,18 @@ $(document).ready(function(){
   	tableRow.append("<td>"+update.val().name+"</td>");
   	tableRow.append("<td>"+update.val().destination+"</td>");
   	tableRow.append("<td>"+update.val().frequency+" mins </td>");
-  	var firstTrainConveert = moment(firstTrain,"hh:mm").subtract(1,"years");
-  	console.log(firstTrain)
+  	var firstTrainConvert = moment(update.val().first,"hh:mm").subtract(1,"years");
+  	console.log(firstTrainConvert);
+  	var currentTime = moment().format("hh:mm");
+  	console.log("current time: "+currentTime);
+  	var timeDiff = moment().diff(moment(firstTrainConvert),"minutes");
+  	var timeLeft = timeDiff % update.val().frequency;
+  	var minTill = update.val().frequency - timeLeft;
+  	console.log("next train in min: "+minTill);
+  	var nextTrain = moment().add(minTill,"minutes").format("LT");
+  	console.log("next train time: "+nextTrain);
+  	tableRow.append("<td>"+nextTrain+"</td>");
+  	tableRow.append("<td>"+minTill+" mins</td>");
   	$("tbody").append(tableRow);
   });
 
